@@ -8,28 +8,34 @@ namespace Casus_CircusTrein
 {   
     class Animal
     {
-        private string name;
-        private int size;
-        private bool meateater;
-        public Animal(string Name,int Size,bool Meateater)
-        {
-            name = Name;
-            size = Size;
-            meateater = Meateater;
-        }
-        public string Name()
-        {
-            return name;
-        }
+        public string Name { get; }
+        public int Size { get; }
+        public int Diet { get; }
 
-        public int Size()
+        public Animal(string Name,int Size,int Diet)
         {
-            return size;
+            this.Name = Name;
+            this.Size = Size;
+            this.Diet = Diet;
         }
+        //public string Name()
+        //{
+        //    return name;
+        //}
 
-        public bool Meateater()
+        //public int Size()
+        //{
+        //    return size;
+        //}
+
+        //public int Meatater()
+        //{
+        //    return diet;
+        //}
+
+        public override string ToString()
         {
-            return meateater;
+            return Name+":"+Diet+":"+Size;
         }
     }
 }

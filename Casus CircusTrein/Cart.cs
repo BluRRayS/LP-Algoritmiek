@@ -8,21 +8,33 @@ namespace Casus_CircusTrein
 {
     class Cart
     {
+        public static int CartNumber = 0;
         private int points = 0;
-        private List<Animal> animals;
         private int maxCarnivoreSize;
+
         public Cart(Animal animal,int animalPoints)
         {
-            animals = new List<Animal>();
-            animals.Add(animal);
+            CartNumber += 1;
+            Animals = new List<Animal> {animal};
             points += animalPoints;
         }
-    
+
+        public List<Animal> Animals { get; set; }
+
+        public int MaxCarPoints { get; } = 10;
+
         public void AddAnimalToCart(Animal animal, int animalPoints)
         {
-            animals.Add(animal);
+            Animals.Add(animal);
             points += animalPoints;
         }
+
+        public int GetCartNumber()
+        {
+            return CartNumber;
+        }
+
+
 
         public int CurrentCartPoints()
         {
@@ -32,11 +44,11 @@ namespace Casus_CircusTrein
         public int GetCarnivoreSize()
         {
             maxCarnivoreSize = 0;
-            foreach (Animal animal in animals)
+            foreach (var animal in Animals)
             {
-                if (animal.Meateater() == true && maxCarnivoreSize<animal.Size())
+                if (animal.Diet == 1&& maxCarnivoreSize<animal.Size)
                 {
-                    maxCarnivoreSize = animal.Size();
+                    maxCarnivoreSize = animal.Size;
                 }
             }
             return maxCarnivoreSize;

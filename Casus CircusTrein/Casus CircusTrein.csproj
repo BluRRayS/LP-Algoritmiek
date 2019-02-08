@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animal.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="Train.cs" />
     <Compile Include="WagonLoader.cs">
       <SubType>Form</SubType>
     </Compile>

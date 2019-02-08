@@ -12,15 +12,19 @@ namespace Casus_CircusTrein
 {
     public partial class WagonLoader : Form
     {
-        private Loader loader;
+        private Train train;
         private List<Animal> animals;
+        private List<Cart> carts;
+        private List<Animal> animalsInCart;
         private int i = 0;
         private string animalName;
         public WagonLoader()
         {
             InitializeComponent();
-            loader = new Loader();
+            train = new Train();
             animals = new List<Animal>();
+            carts = new List<Cart>();
+            animalsInCart = new List<Animal>();
         }
 
         private void BtnAddAnimal_Click(object sender, EventArgs e)
@@ -29,11 +33,11 @@ namespace Casus_CircusTrein
             {
                 animals.Clear();
                 ListBoxAnimals.Items.Clear();
-                loader.AddAnimal(TxtBoxName.Text, ComboBoxSize.SelectedIndex+1, Convert.ToBoolean(ComboBoxDiet.SelectedIndex));
-                animals.AddRange(loader.GetAnimals());
-                foreach (Animal animal in animals)
+                train.AddAnimal(TxtBoxName.Text, Convert.ToInt32(ComboBoxSize.SelectedItem), ComboBoxDiet.SelectedIndex);
+                animals.AddRange(train.GetAnimals());
+                foreach (var animal in animals)
                 {
-                    animalName = animals.ElementAt(i).Name();
+                    animalName = animals.ElementAt(i).Name;
                     ListBoxAnimals.Items.Add(animalName);
                     i++;
                 }
@@ -46,13 +50,26 @@ namespace Casus_CircusTrein
         {
             animals.Clear();
             ListBoxAnimals.Items.Clear();
-            loader.ClearList();
+            train.ClearLists();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             ListBoxAnimals.Items.Clear();
-            MessageBox.Show("You will need: " + loader.CalculateCartAmount() + " of wagons");
+            MessageBox.Show("You will need: " + train.CalculateCartAmount() + " of wagons");
+            carts.AddRange(train.Carts);
+            carts.ToList().ForEach(cart => CBWagons.Items.Add("Wagon:" + cart.GetCartNumber()));
+        }
+
+        private void CBWagons_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBoxWagons.Items.Clear();
+            animalsInCart.Clear();
+            animalsInCart.AddRange(carts[CBWagons.SelectedIndex].Animals);
+            foreach (var animal in animalsInCart)
+            {
+                ListBoxWagons.Items.Add(animal.ToString());
+            }
         }
     }
 }

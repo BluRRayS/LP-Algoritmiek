@@ -159,9 +159,9 @@
             "Large"});
             this.ComboBoxSize.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.ComboBoxSize.Items.AddRange(new object[] {
-            "1",
-            "3",
-            "5"});
+            "small",
+            "medium",
+            "large"});
             this.ComboBoxSize.Location = new System.Drawing.Point(42, 34);
             this.ComboBoxSize.Name = "ComboBoxSize";
             this.ComboBoxSize.Size = new System.Drawing.Size(121, 21);

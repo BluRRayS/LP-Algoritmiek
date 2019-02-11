@@ -26,7 +26,6 @@ namespace Casus_CircusTrein
             //Step 2 Add all existing herbivores to carts
             foreach (var animal in animals)
             {
-
                 foreach (var cart in Carts)
                 {
                     if ((animal.Diet== 0) && ((cart.Animals[0].Size < animal.Size && (cart.Animals[0].Diet == 1) || (cart.Animals[0].Diet == 0)) && ((cart.CurrentCartPoints() + animal.Size <= cart.MaxCarPoints))))
@@ -34,15 +33,13 @@ namespace Casus_CircusTrein
                         cart.AddAnimalToCart(animal, animal.Size);
                         break;
                     }
-
                 }
                 if (IsAnimalInCart(animal) == false)
                 {
                     Carts.Add(new Cart(animal, animal.Size));
                 }
             }
-            wagons = Carts.Count;
-            return wagons;
+            return Carts.Count;
         }
 
         public bool IsAnimalInCart(Animal animal)
@@ -59,7 +56,7 @@ namespace Casus_CircusTrein
             return animalInCart;
         }
 
-        public void AddAnimal(string name, int size, int diet)
+        public void AddAnimal(string name, Enums.Sizes size, Enums.Diets diet)
         {
             animals.Add(new Animal(name, size, diet));
         }

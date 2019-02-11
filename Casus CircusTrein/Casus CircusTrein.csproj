@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animal.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Train.cs" />
     <Compile Include="WagonLoader.cs">
       <SubType>Form</SubType>

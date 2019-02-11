@@ -29,11 +29,11 @@ namespace Casus_CircusTrein
 
         private void BtnAddAnimal_Click(object sender, EventArgs e)
         {
-            try
-            {
-                animals.Clear();
+            Enums enums = new Enums();
+
+            animals.Clear();
                 ListBoxAnimals.Items.Clear();
-                train.AddAnimal(TxtBoxName.Text, Convert.ToInt32(ComboBoxSize.SelectedItem), ComboBoxDiet.SelectedIndex);
+                train.AddAnimal(TxtBoxName.Text, (Enums.Sizes)Enum.ToObject(typeof(Enums.Sizes), (enums.GetSize(ComboBoxSize.SelectedIndex))), (Enums.Diets)Enum.ToObject(typeof(Enums.Diets), ComboBoxDiet.SelectedIndex));
                 animals.AddRange(train.GetAnimals());
                 foreach (var animal in animals)
                 {
@@ -42,8 +42,7 @@ namespace Casus_CircusTrein
                     i++;
                 }
                 i = 0;
-            }
-            catch { }
+
         }
 
         private void BtnClearList_Click(object sender, EventArgs e)
@@ -57,6 +56,7 @@ namespace Casus_CircusTrein
         {
             ListBoxAnimals.Items.Clear();
             MessageBox.Show("You will need: " + train.CalculateCartAmount() + " of wagons");
+            carts.Clear();
             carts.AddRange(train.Carts);
             carts.ToList().ForEach(cart => CBWagons.Items.Add("Wagon:" + cart.GetCartNumber()));
         }

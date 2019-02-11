@@ -10,28 +10,18 @@ namespace Casus_CircusTrein
     {
         public string Name { get; }
         public int Size { get; }
+
         public int Diet { get; }
+       
 
-        public Animal(string Name,int Size,int Diet)
+        public Animal(string name,Enums.Sizes size,Enums.Diets diet)
         {
-            this.Name = Name;
-            this.Size = Size;
-            this.Diet = Diet;
+            this.Name = name;
+            this.Size = (int) size;
+            this.Diet = (int) diet;
         }
-        //public string Name()
-        //{
-        //    return name;
-        //}
 
-        //public int Size()
-        //{
-        //    return size;
-        //}
-
-        //public int Meatater()
-        //{
-        //    return diet;
-        //}
+        
 
         public override string ToString()
         {

@@ -5,27 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Casus_CircusTrein
-{   
-    class Animal
+{
+    internal class Animal
     {
         public string Name { get; }
         public int Size { get; }
-
         public int Diet { get; }
-       
 
-        public Animal(string name,Enums.Sizes size,Enums.Diets diet)
+        public Animal(string name, Enums.Sizes size, Enums.Diets diet)
         {
-            this.Name = name;
-            this.Size = (int) size;
-            this.Diet = (int) diet;
+            Name = name;
+            Size = (int) size;
+            Diet = (int) diet;
         }
-
-        
 
         public override string ToString()
         {
-            return Name+":"+Diet+":"+Size;
+            return Name + ":" + Diet + ":" + Size;
         }
     }
 }

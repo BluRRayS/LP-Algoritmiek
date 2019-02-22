@@ -10,7 +10,6 @@ namespace Casus_CircusTrein
     {
         public static int CartNumber = 0;
         private int points = 0;
-        private int maxCarnivoreSize;
 
         public Cart(Animal animal,int animalPoints)
         {
@@ -34,24 +33,9 @@ namespace Casus_CircusTrein
             return CartNumber;
         }
 
-
-
         public int CurrentCartPoints()
         {
             return points;
-        }
-
-        public int GetCarnivoreSize()
-        {
-            maxCarnivoreSize = 0;
-            foreach (var animal in Animals)
-            {
-                if (animal.Diet == 1&& maxCarnivoreSize<animal.Size)
-                {
-                    maxCarnivoreSize = animal.Size;
-                }
-            }
-            return maxCarnivoreSize;
         }
     }
 }

@@ -12,12 +12,13 @@ namespace Casus_CircusTrein
 {
     public partial class WagonLoader : Form
     {
-        private Train train;
-        private List<Animal> animals;
-        private List<Cart> carts;
-        private List<Animal> animalsInCart;
-        private int i = 0;
+        private readonly Train train;
+        private readonly List<Animal> animals;
+        private readonly List<Cart> carts;
+        private readonly List<Animal> animalsInCart;
+        private int i;
         private string animalName;
+
         public WagonLoader()
         {
             InitializeComponent();
@@ -29,20 +30,21 @@ namespace Casus_CircusTrein
 
         private void BtnAddAnimal_Click(object sender, EventArgs e)
         {
-            Enums enums = new Enums();
+            var enums = new Enums();
 
             animals.Clear();
-                ListBoxAnimals.Items.Clear();
-                train.AddAnimal(TxtBoxName.Text, (Enums.Sizes)Enum.ToObject(typeof(Enums.Sizes), (enums.GetSize(ComboBoxSize.SelectedIndex))), (Enums.Diets)Enum.ToObject(typeof(Enums.Diets), ComboBoxDiet.SelectedIndex));
-                animals.AddRange(train.GetAnimals());
-                foreach (var animal in animals)
-                {
-                    animalName = animals.ElementAt(i).Name;
-                    ListBoxAnimals.Items.Add(animalName);
-                    i++;
-                }
-                i = 0;
-
+            ListBoxAnimals.Items.Clear();
+            train.AddAnimal(TxtBoxName.Text,
+                (Enums.Sizes) Enum.ToObject(typeof(Enums.Sizes), enums.GetSize(ComboBoxSize.SelectedIndex)),
+                (Enums.Diets) Enum.ToObject(typeof(Enums.Diets), ComboBoxDiet.SelectedIndex));
+            animals.AddRange(train.GetAnimals());
+            foreach (var animal in animals)
+            {
+                animalName = animals.ElementAt(i).Name;
+                ListBoxAnimals.Items.Add(animalName);
+                i++;
+            }
+            i = 0;
         }
 
         private void BtnClearList_Click(object sender, EventArgs e)
@@ -66,10 +68,7 @@ namespace Casus_CircusTrein
             ListBoxWagons.Items.Clear();
             animalsInCart.Clear();
             animalsInCart.AddRange(carts[CBWagons.SelectedIndex].Animals);
-            foreach (var animal in animalsInCart)
-            {
-                ListBoxWagons.Items.Add(animal.ToString());
-            }
+            foreach (var animal in animalsInCart) ListBoxWagons.Items.Add(animal.ToString());
         }
     }
 }

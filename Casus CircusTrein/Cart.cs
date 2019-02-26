@@ -8,17 +8,22 @@ namespace Casus_CircusTrein
 {
     class Cart
     {
-        public static int CartNumber = 0;
+        private static int cartNumber = 0;
         private int points = 0;
 
         public Cart(Animal animal,int animalPoints)
         {
-            CartNumber += 1;
+            cartNumber += 1;
             Animals = new List<Animal> {animal};
             points += animalPoints;
         }
 
-        public List<Animal> Animals { get; set; }
+        private List<Animal> Animals { get; set; }
+
+        public IReadOnlyList<Animal> GetAnimals()
+        {
+            return Animals;
+        }
 
         public int MaxCarPoints { get; } = 10;
 
@@ -30,7 +35,7 @@ namespace Casus_CircusTrein
 
         public int GetCartNumber()
         {
-            return CartNumber;
+            return cartNumber;
         }
 
         public int CurrentCartPoints()

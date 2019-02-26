@@ -8,13 +8,18 @@ namespace Casus_CircusTrein
 {
     internal class Train
     {
-        public List<Cart> Carts { get; }
+        private List<Cart> Carts { get; }
         private List<Animal> animals;
 
         public Train()
         {
             Carts = new List<Cart>();
             animals = new List<Animal>();
+        }
+
+        public IReadOnlyList<Cart> GetCarts()
+        {
+            return Carts;
         }
 
         public int CalculateCartAmount()
@@ -29,16 +34,14 @@ namespace Casus_CircusTrein
             {
                 foreach (var cart in Carts)
                 {
-                    if (animal.Diet != 0 || (cart.Animals[0].Size >= animal.Size || cart.Animals[0].Diet != 1) &&
-                        cart.Animals[0].Diet != 0 ||
+                    if (animal.Diet != 0 || (cart.GetAnimals()[0].Size >= animal.Size || cart.GetAnimals()[0].Diet != 1) &&
+                        cart.GetAnimals()[0].Diet != 0 ||
                         cart.CurrentCartPoints() + animal.Size > cart.MaxCarPoints) continue;
                     cart.AddAnimalToCart(animal, animal.Size);
                     break;
                 }
-
                 if (IsAnimalInCart(animal) == false) Carts.Add(new Cart(animal, animal.Size));
             }
-
             return Carts.Count;
         }
 
@@ -47,7 +50,7 @@ namespace Casus_CircusTrein
             var animalInCart = false;
 
             foreach (var cart in Carts)
-                if (cart.Animals.Contains(animal))
+                if (cart.GetAnimals().Contains(animal))
                     animalInCart = true;
             return animalInCart;
         }

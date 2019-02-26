@@ -59,7 +59,7 @@ namespace Casus_CircusTrein
             ListBoxAnimals.Items.Clear();
             MessageBox.Show("You will need: " + train.CalculateCartAmount() + " of wagons");
             carts.Clear();
-            carts.AddRange(train.Carts);
+            carts.AddRange(train.GetCarts());
             carts.ToList().ForEach(cart => CBWagons.Items.Add("Wagon:" + cart.GetCartNumber()));
         }
 
@@ -67,7 +67,7 @@ namespace Casus_CircusTrein
         {
             ListBoxWagons.Items.Clear();
             animalsInCart.Clear();
-            animalsInCart.AddRange(carts[CBWagons.SelectedIndex].Animals);
+            animalsInCart.AddRange(carts[CBWagons.SelectedIndex].GetAnimals());
             foreach (var animal in animalsInCart) ListBoxWagons.Items.Add(animal.ToString());
         }
     }

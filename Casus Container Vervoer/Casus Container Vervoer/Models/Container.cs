@@ -30,5 +30,10 @@ namespace Casus_Container_Vervoer.Models
 
         public double Weight { get; private set; }
         public Enum FreightType { get; private set; }
+
+        public override string ToString()
+        {
+            return "FreightType:"+FreightType.ToString()+"Weight:"+Weight;
+        }
     }
 }

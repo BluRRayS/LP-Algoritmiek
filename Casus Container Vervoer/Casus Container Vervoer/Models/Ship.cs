@@ -17,18 +17,48 @@ namespace Casus_Container_Vervoer.Models
             this.Length = length;
             this.MaxWeight = maxCargoWeight;
             _spots = new List<ShipSpot>();
-            addAllShipSpots();
+            _containers = new List<Container>();
+            AddAllShipSpots();
         }
 
-        private void addAllShipSpots()
+        private void AddAllShipSpots()
         {
             for (var y = 0; y < Length; y++)
             {
                 for (var x = 0; x < Width; x++)
                 {
-                    _spots.Add(new ShipSpot(x,y));
+                    _spots.Add(new ShipSpot(x, y));
                 }
             }
+        }
+
+        //Add data protection later
+        public List<ShipSpot> GetSpots()
+        {
+            return _spots;
+        }
+
+        //
+        public ShipSpot GetSpotForContainer(int xPos,int yPos,Container container)
+        {
+            try
+            {
+                return _spots
+                    .Where(spot => spot.XPos == xPos && spot.YPos == yPos && container.Weight + spot.Weight <= 120)
+                    .ToList().First();
+            }
+            catch
+            {
+                return _spots
+                    .Where(spot => spot.YPos == yPos && container.Weight + spot.Weight <= 120)
+                    .ToList().First();
+            }
+        }
+        //
+
+        public List<ShipSpot> GetShipSpots(int yPos)
+        {
+            return _spots.Where(spot => spot.YPos == yPos).ToList();
         }
 
         public int Width { get; private set; }
@@ -37,13 +67,17 @@ namespace Casus_Container_Vervoer.Models
 
         public IReadOnlyList<Container> GetShipsContainers()
         {
-            _containers= new List<Container>();
+            _containers = new List<Container>();
             foreach (var spot in _spots)
             {
                 _containers.AddRange(spot.GetContainers());
             }
-
             return _containers;
+        }
+
+        public void AddContainerToShip(Container container)
+        {
+            _containers.Add(container);
         }
     }
 }

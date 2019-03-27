@@ -6,50 +6,62 @@ using System.Threading.Tasks;
 
 namespace Casus_CircusTrein
 {
-    internal class Train
+    public class Train
     {
-        private List<Cart> Carts { get; }
+        private List<Cart> carts;
         private List<Animal> animals;
 
         public Train()
         {
-            Carts = new List<Cart>();
+            carts = new List<Cart>();
             animals = new List<Animal>();
         }
 
-        public IReadOnlyList<Cart> GetCarts()
+        public IReadOnlyCollection<Cart> GetTrainCarts()
         {
-            return Carts;
+            return carts;
         }
 
-        public int CalculateCartAmount()
+        public int CalculateCartAmount(List<Animal> animalsToSort)
         {
-            //Sorts List from big to small
-            animals = animals.OrderBy(animal => animal.Size).ToList();
-            //Step 1 Add all carnivores to a different cart.
-            animals.Where(animal => animal.Diet.Equals(1)).ToList()
-                .ForEach(animal => Carts.Add(new Cart(animal, animal.Size)));
-            //Step 2 Add all existing herbivores to carts
-            foreach (var animal in animals)
+            animalsToSort = OrderAnimalsBySize(animalsToSort) as List<Animal>;
+            AddEveryCarnivoreToACart(animalsToSort);
+            AddHerbivoresToCarts(animalsToSort);
+            return carts.Count;
+        }
+
+        private static IEnumerable<Animal> OrderAnimalsBySize(IEnumerable<Animal> animals)
+        {
+            return animals = animals.OrderBy(animal => animal.Size).ToList();
+        }
+
+        private void AddEveryCarnivoreToACart(IEnumerable<Animal> animalsToSort)
+        {
+            animalsToSort.Where(animal => animal.Diet == Enums.Diets.carnivore).ToList()
+                        .ForEach(animal => carts.Add(new Cart(animal)));
+        }
+
+        private void AddHerbivoresToCarts(IEnumerable<Animal> animalsToSort)
+        {
+            foreach (var animal in animalsToSort)
             {
-                foreach (var cart in Carts)
+                foreach (var cart in carts)
                 {
-                    if (animal.Diet != 0 || (cart.GetAnimals()[0].Size >= animal.Size || cart.GetAnimals()[0].Diet != 1) &&
-                        cart.GetAnimals()[0].Diet != 0 ||
-                        cart.CurrentCartPoints() + animal.Size > cart.MaxCarPoints) continue;
-                    cart.AddAnimalToCart(animal, animal.Size);
+                    if (animal.Diet != 0 || (cart.GetAnimals()[0].Size < animal.Size && cart.GetAnimals()[0].Diet != Enums.Diets.carnivore) &&
+                                        cart.GetAnimals()[0].Diet != 0 ||
+                                        cart.Points + animal.GetAnimalPoints(animal) > cart.MaxCarPoints) continue;
+                    cart.AddAnimalToCart(animal);
                     break;
                 }
-                if (IsAnimalInCart(animal) == false) Carts.Add(new Cart(animal, animal.Size));
+                if (IsAnimalInCart(animal) == false) carts.Add(new Cart(animal));
             }
-            return Carts.Count;
         }
 
         public bool IsAnimalInCart(Animal animal)
         {
             var animalInCart = false;
 
-            foreach (var cart in Carts)
+            foreach (var cart in carts)
                 if (cart.GetAnimals().Contains(animal))
                     animalInCart = true;
             return animalInCart;
@@ -60,7 +72,7 @@ namespace Casus_CircusTrein
             animals.Add(new Animal(name, size, diet));
         }
 
-        public List<Animal> GetAnimals()
+        public IReadOnlyCollection<Animal> GetAnimals()
         {
             return animals;
         }
@@ -68,7 +80,8 @@ namespace Casus_CircusTrein
         public void ClearLists()
         {
             animals.Clear();
-            Carts.Clear();
+            carts.Clear();
         }
+
     }
 }

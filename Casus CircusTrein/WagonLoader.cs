@@ -35,7 +35,7 @@ namespace Casus_CircusTrein
             animals.Clear();
             ListBoxAnimals.Items.Clear();
             train.AddAnimal(TxtBoxName.Text,
-                (Enums.Sizes) Enum.ToObject(typeof(Enums.Sizes), enums.GetSize(ComboBoxSize.SelectedIndex)),
+                (Enums.Sizes) Enum.ToObject(typeof(Enums.Sizes),(ComboBoxSize.SelectedIndex)),
                 (Enums.Diets) Enum.ToObject(typeof(Enums.Diets), ComboBoxDiet.SelectedIndex));
             animals.AddRange(train.GetAnimals());
             foreach (var animal in animals)
@@ -51,16 +51,20 @@ namespace Casus_CircusTrein
         {
             animals.Clear();
             ListBoxAnimals.Items.Clear();
+            ListBoxWagons.Items.Clear();
+            CBWagons.Items.Clear();
             train.ClearLists();
+            BtnAddAnimal.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            BtnAddAnimal.Enabled = false;
             ListBoxAnimals.Items.Clear();
-            MessageBox.Show("You will need: " + train.CalculateCartAmount() + " of wagons");
+            MessageBox.Show("You will need: " + train.CalculateCartAmount(animals) + " of wagons");
             carts.Clear();
-            carts.AddRange(train.GetCarts());
-            carts.ToList().ForEach(cart => CBWagons.Items.Add("Wagon:" + cart.GetCartNumber()));
+            carts.AddRange(train.GetTrainCarts());
+            carts.ToList().ForEach(cart => CBWagons.Items.Add("Wagon:" + carts.IndexOf(cart)));
         }
 
         private void CBWagons_SelectedIndexChanged(object sender, EventArgs e)

@@ -6,17 +6,28 @@ using System.Threading.Tasks;
 
 namespace Casus_CircusTrein
 {
-    internal class Animal
+    public class Animal
     {
         public string Name { get; }
-        public int Size { get; }
-        public int Diet { get; }
+        public Enums.Sizes Size { get; }
+        public Enums.Diets Diet { get; }
 
         public Animal(string name, Enums.Sizes size, Enums.Diets diet)
         {
             Name = name;
-            Size = (int) size;
-            Diet = (int) diet;
+            Size = size;
+            Diet = diet;
+        }
+
+        public int GetAnimalPoints(Animal animal)
+        {
+            switch (animal.Size)
+            {
+                case Enums.Sizes.small: return 1;
+                case Enums.Sizes.medium: return 3;
+                case Enums.Sizes.large: return 5;
+                default: return 1;
+            }
         }
 
         public override string ToString()

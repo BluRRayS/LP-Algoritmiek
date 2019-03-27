@@ -3,44 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Casus_CircusTrein
 {
-    class Cart
+    public class Cart
     {
-        private static int cartNumber = 0;
-        private int points = 0;
+        private readonly List<Animal> animals;
 
-        public Cart(Animal animal,int animalPoints)
+        public Cart(Animal animal)
         {
-            cartNumber += 1;
-            Animals = new List<Animal> {animal};
-            points += animalPoints;
-        }
-
-        private List<Animal> Animals { get; set; }
-
-        public IReadOnlyList<Animal> GetAnimals()
-        {
-            return Animals;
+            animals = new List<Animal>(){animal};
+            Points = animal.GetAnimalPoints(animal);
         }
 
         public int MaxCarPoints { get; } = 10;
+        public int Points { get; private set; }
 
-        public void AddAnimalToCart(Animal animal, int animalPoints)
+        public IReadOnlyList<Animal> GetAnimals()
         {
-            Animals.Add(animal);
-            points += animalPoints;
+            return animals;
         }
 
-        public int GetCartNumber()
+        public void AddAnimalToCart(Animal animal)
         {
-            return cartNumber;
+            animals.Add(animal);
+            Points += animal.GetAnimalPoints(animal);
         }
 
-        public int CurrentCartPoints()
+        public bool AnimalFits(Animal animal)
         {
-            return points;
+            return Points + animal.GetAnimalPoints(animal) <= 10;
         }
+
     }
 }

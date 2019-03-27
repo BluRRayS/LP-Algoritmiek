@@ -44,21 +44,26 @@ namespace Casus_Container_Vervoer.Models
             try
             {
                 return _spots
-                    .Where(spot => spot.XPos == xPos && spot.YPos == yPos && container.Weight + spot.Weight <= 120)
+                    .Where(spot => spot.XPos == xPos && spot.YPos == yPos)
                     .ToList().First();
             }
             catch
             {
                 return _spots
-                    .Where(spot => spot.YPos == yPos && container.Weight + spot.Weight <= 120)
+                    .Where(spot => spot.YPos == yPos)
                     .ToList().First();
             }
         }
         //
+        public ShipSpot GetSpot(int xPos, int yPos)
+        {
+            return _spots.First(spot => spot.XPos == xPos && spot.YPos == yPos);
+        }
+
 
         public List<ShipSpot> GetShipSpots(int yPos)
         {
-            return _spots.Where(spot => spot.YPos == yPos).ToList();
+            return _spots.Where(spot => spot.YPos == yPos).OrderBy(spot=>spot.YPos).ToList();
         }
 
         public int Width { get; private set; }

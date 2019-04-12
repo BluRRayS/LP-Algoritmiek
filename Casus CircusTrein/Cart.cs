@@ -9,11 +9,11 @@ namespace Casus_CircusTrein
 {
     public class Cart
     {
-        private readonly List<Animal> animals;
+        private readonly List<Animal> _animals;
 
         public Cart(Animal animal)
         {
-            animals = new List<Animal>(){animal};
+            _animals = new List<Animal>() { animal };
             Points = animal.GetAnimalPoints(animal);
         }
 
@@ -22,18 +22,19 @@ namespace Casus_CircusTrein
 
         public IReadOnlyList<Animal> GetAnimals()
         {
-            return animals;
+            return _animals;
         }
 
         public void AddAnimalToCart(Animal animal)
         {
-            animals.Add(animal);
+            _animals.Add(animal);
             Points += animal.GetAnimalPoints(animal);
         }
 
-        public bool AnimalFits(Animal animal)
+        public bool AnimalFits(Animal animalToBeAdded)
         {
-            return Points + animal.GetAnimalPoints(animal) <= 10;
+            return ((Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.Any(_animal =>
+                        _animal.Diet == Enums.Diets.Carnivore && _animal.Size >= animalToBeAdded.Size)));
         }
 
     }

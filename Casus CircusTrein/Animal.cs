@@ -23,9 +23,9 @@ namespace Casus_CircusTrein
         {
             switch (animal.Size)
             {
-                case Enums.Sizes.small: return 1;
-                case Enums.Sizes.medium: return 3;
-                case Enums.Sizes.large: return 5;
+                case Enums.Sizes.Small: return 1;
+                case Enums.Sizes.Medium: return 3;
+                case Enums.Sizes.Large: return 5;
                 default: return 1;
             }
         }

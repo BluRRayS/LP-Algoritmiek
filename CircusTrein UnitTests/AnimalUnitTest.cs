@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using Casus_CircusTrein;
@@ -15,9 +16,9 @@ namespace CircusTrein_UnitTests
         public void GetsAnimalPointsCorrectly()
         {
             //Arrange
-            var animal1 = new Animal("smallAnimal",Enums.Sizes.small,Enums.Diets.herbivore);
-            var animal2 = new Animal("MediumAnimal", Enums.Sizes.medium, Enums.Diets.carnivore);
-            var animal3 = new Animal("smallAnimal", Enums.Sizes.large, Enums.Diets.herbivore);
+            var animal1 = new Animal("smallAnimal",Enums.Sizes.Small,Enums.Diets.Herbivore);
+            var animal2 = new Animal("MediumAnimal", Enums.Sizes.Medium, Enums.Diets.Carnivore);
+            var animal3 = new Animal("smallAnimal", Enums.Sizes.Large, Enums.Diets.Herbivore);
             var animal1Points = 0;
             var animal2Points = 0;
             var animal3Points = 0;
@@ -35,14 +36,14 @@ namespace CircusTrein_UnitTests
         public void ToStringWorksProperly()
         {
             //Arrange
-            var animal = new Animal("Lion",Enums.Sizes.medium,Enums.Diets.carnivore);
+            var animal = new Animal("Lion",Enums.Sizes.Medium,Enums.Diets.Carnivore);
             var toString =""; 
 
             //Act
             toString = animal.ToString();
 
             //Assert
-            Assert.IsTrue(toString=="Lion:carnivore:medium");
+            Assert.IsTrue(toString=="Lion:"+Enums.Diets.Carnivore+":"+Enums.Sizes.Medium.ToString());
         }
     }
 }

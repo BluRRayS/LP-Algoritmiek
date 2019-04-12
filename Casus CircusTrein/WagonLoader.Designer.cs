@@ -175,7 +175,7 @@
             this.BtnCalculate.TabIndex = 3;
             this.BtnCalculate.Text = "Calculate Wagon Count";
             this.BtnCalculate.UseVisualStyleBackColor = true;
-            this.BtnCalculate.Click += new System.EventHandler(this.button1_Click);
+            this.BtnCalculate.Click += new System.EventHandler(this.BtnCalculate_Click);
             // 
             // ListBoxWagons
             // 

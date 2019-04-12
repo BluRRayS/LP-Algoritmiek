@@ -11,15 +11,15 @@ namespace Casus_CircusTrein
 
         public enum Diets
         {
-            herbivore,
-            carnivore
+            Herbivore,
+            Carnivore
         };
 
         public enum Sizes 
         {
-            small,
-            medium,
-            large
+            Small,
+            Medium,
+            Large
         };
     }
 }

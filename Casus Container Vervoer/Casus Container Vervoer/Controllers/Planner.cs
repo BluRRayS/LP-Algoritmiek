@@ -94,11 +94,11 @@ namespace Casus_Container_Vervoer.Models
         }
 
 
-        public void FillRow(List<Container> containers, List<ShipSpot> spots)
+        public void FillRow(List<Container> containers, List<Position> spots)
         {
             //sorting List low high, low+index, High-index
             var index = 0;
-            var spotsSorted = new List<ShipSpot>();
+            var spotsSorted = new List<Position>();
             while (spotsSorted.Count < spots.Count)
             {
                 if (spotsSorted.Count == spots.Count) break;

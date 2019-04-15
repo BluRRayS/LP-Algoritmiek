@@ -33,8 +33,8 @@ namespace Casus_CircusTrein
 
         public bool AnimalFits(Animal animalToBeAdded)
         {
-            return ((Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.Any(_animal =>
-                        _animal.Diet == Enums.Diets.Carnivore && _animal.Size >= animalToBeAdded.Size)));
+            return ((Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.Any(animal =>
+                        animal.Diet == Enums.Diets.Carnivore && animal.Size >= animalToBeAdded.Size)));
         }
 
     }

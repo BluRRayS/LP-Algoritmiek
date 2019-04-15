@@ -9,7 +9,7 @@ namespace Casus_CircusTrein
     public class Train
     {
         private readonly List<Cart> carts;
-        private readonly List<Animal> animals;
+        private  List<Animal> animals;
 
         public Train()
         {
@@ -24,7 +24,7 @@ namespace Casus_CircusTrein
 
         public int CalculateCartAmount()
         {
-            foreach (var animal in animals.OrderByDescending(animal => animal.Size))
+            foreach (var animal in animals.OrderByDescending(animal => animal.Diet).ThenByDescending(animal=> animal.Size))
             {
                 AddAnimalToACart(animal);
             }

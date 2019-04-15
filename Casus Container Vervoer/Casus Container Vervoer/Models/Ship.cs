@@ -8,7 +8,7 @@ namespace Casus_Container_Vervoer.Models
 {
     internal class Ship
     {
-        private List<ShipSpot> _spots;
+        private List<Position> _spots;
         private List<Container> _containers;
 
         public Ship(int width, int length, double maxCargoWeight)
@@ -16,7 +16,7 @@ namespace Casus_Container_Vervoer.Models
             this.Width = width;
             this.Length = length;
             this.MaxWeight = maxCargoWeight;
-            _spots = new List<ShipSpot>();
+            _spots = new List<Position>();
             _containers = new List<Container>();
             AddAllShipSpots();
         }
@@ -27,19 +27,19 @@ namespace Casus_Container_Vervoer.Models
             {
                 for (var x = 0; x < Width; x++)
                 {
-                    _spots.Add(new ShipSpot(x, y));
+                    _spots.Add(new Position(x, y));
                 }
             }
         }
 
         //Add data protection later
-        public List<ShipSpot> GetSpots()
+        public List<Position> GetSpots()
         {
             return _spots;
         }
 
         //
-        public ShipSpot GetSpotForContainer(int xPos,int yPos,Container container)
+        public Position GetSpotForContainer(int xPos,int yPos,Container container)
         {
             try
             {
@@ -55,13 +55,13 @@ namespace Casus_Container_Vervoer.Models
             }
         }
         //
-        public ShipSpot GetSpot(int xPos, int yPos)
+        public Position GetSpot(int xPos, int yPos)
         {
             return _spots.First(spot => spot.XPos == xPos && spot.YPos == yPos);
         }
 
 
-        public List<ShipSpot> GetShipSpots(int yPos)
+        public List<Position> GetShipSpots(int yPos)
         {
             return _spots.Where(spot => spot.YPos == yPos).OrderBy(spot=>spot.YPos).ToList();
         }

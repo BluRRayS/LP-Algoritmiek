@@ -56,7 +56,7 @@
     <Compile Include="Models\Helpers\Enums.cs" />
     <Compile Include="Controllers\Planner.cs" />
     <Compile Include="Models\Ship.cs" />
-    <Compile Include="Models\ShipSpot.cs" />
+    <Compile Include="Models\Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

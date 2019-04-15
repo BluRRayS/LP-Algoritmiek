@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Casus_Container_Vervoer.Models
 {
-    internal class ShipSpot
+    internal class Position
     {
         private readonly List<Container> _containers;
-        public ShipSpot(int xPos, int yPos)
+        public Position(int xPos, int yPos)
         {
             this.XPos = xPos;
             this.YPos = yPos;
@@ -19,6 +19,7 @@ namespace Casus_Container_Vervoer.Models
         public double Weight { get; private set; }
         public int XPos { get; private set; }
         public int YPos { get; private set; }
+        public int ZPos { get; private set; }
 
         public void AddContainer(Container container)
         {
@@ -26,9 +27,19 @@ namespace Casus_Container_Vervoer.Models
             Weight += container.Weight;
         }
 
-        public IReadOnlyList<Container> GetContainers()
+        public IReadOnlyCollection<Container> GetContainers()
         {
             return _containers;
+        }
+
+        private double GetPositionWeight()
+        {
+            return Weight - _containers.First().Weight;
+        }
+
+        public bool TryAddContainer(Container container)
+        {
+            return Weight + container.Weight <= GetPositionWeight();
         }
     }
 }

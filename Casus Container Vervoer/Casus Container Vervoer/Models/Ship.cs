@@ -8,7 +8,7 @@ namespace Casus_Container_Vervoer.Models
 {
     internal class Ship
     {
-        private List<Position> _spots;
+        private List<Position> _positions;
         private List<Container> _containers;
 
         public Ship(int width, int length, double maxCargoWeight)
@@ -16,73 +16,53 @@ namespace Casus_Container_Vervoer.Models
             this.Width = width;
             this.Length = length;
             this.MaxWeight = maxCargoWeight;
-            _spots = new List<Position>();
+            _positions = new List<Position>();
             _containers = new List<Container>();
-            AddAllShipSpots();
-        }
-
-        private void AddAllShipSpots()
-        {
-            for (var y = 0; y < Length; y++)
-            {
-                for (var x = 0; x < Width; x++)
-                {
-                    _spots.Add(new Position(x, y));
-                }
-            }
-        }
-
-        //Add data protection later
-        public List<Position> GetSpots()
-        {
-            return _spots;
-        }
-
-        //
-        public Position GetSpotForContainer(int xPos,int yPos,Container container)
-        {
-            try
-            {
-                return _spots
-                    .Where(spot => spot.XPos == xPos && spot.YPos == yPos)
-                    .ToList().First();
-            }
-            catch
-            {
-                return _spots
-                    .Where(spot => spot.YPos == yPos)
-                    .ToList().First();
-            }
-        }
-        //
-        public Position GetSpot(int xPos, int yPos)
-        {
-            return _spots.First(spot => spot.XPos == xPos && spot.YPos == yPos);
-        }
-
-
-        public List<Position> GetShipSpots(int yPos)
-        {
-            return _spots.Where(spot => spot.YPos == yPos).OrderBy(spot=>spot.YPos).ToList();
+            AddGridToShip();
         }
 
         public int Width { get; private set; }
         public int Length { get; private set; }
         public double MaxWeight { get; private set; }
 
+        private void AddGridToShip()
+        {
+            for (var y = 0; y < Length; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    _positions.Add(new Position(x, y));
+                }
+            }
+        }
+
         public IReadOnlyList<Container> GetShipsContainers()
         {
             _containers = new List<Container>();
-            foreach (var spot in _spots)
+            foreach (var position in _positions)
             {
-                _containers.AddRange(spot.GetContainers());
+                _containers.AddRange(position.GetContainers());
             }
             return _containers;
         }
 
-        public void AddContainerToShip(Container container)
+        public IEnumerable<Position> GetShipPositionsFromLightestSide()
         {
-            _containers.Add(container);
+            var leftPositions = _positions.Where(pos => pos.XPos <= (Math.Round(Width / 2.0))).ToList();
+            var rightPositions = _positions.Where(pos => pos.XPos > (Math.Round(Width / 2.0))).ToList();
+            return(GetTotalPositionsWeight(leftPositions) < GetTotalPositionsWeight(rightPositions)) ? leftPositions:rightPositions;
         }
+
+        private static double GetTotalPositionsWeight(IEnumerable<Position> positions)
+        {
+           return positions.Sum(position => position.Weight);
+        }
+
+
+        public IEnumerable<Position> GetAllPositions()
+        {
+            return _positions;
+        }
+
     }
 }

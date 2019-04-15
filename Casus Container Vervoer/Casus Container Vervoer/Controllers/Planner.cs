@@ -12,8 +12,8 @@ namespace Casus_Container_Vervoer.Models
     internal class Planner
     {
         private List<Container> _containers;
-        private Ship _ship;
-        private int xPos;
+        private readonly Ship _ship;
+
         public Planner(Ship ship)
         {
             _ship = ship;
@@ -31,105 +31,71 @@ namespace Casus_Container_Vervoer.Models
             return _containers;
         }
 
-        private List<Container> GetCooledContainers()
-        {
-            var cooledContainers = _containers.Where(container => container.FreightType.Equals(Enums.FreightType.Cooled)).OrderBy(cooler => cooler.Weight).ToList();
-            return cooledContainers;
-        }
-
-        private List<Container> GetAllStandardContainers()
-        {
-            var standardContainers = _containers
-                .Where(container => container.FreightType.Equals(Enums.FreightType.Standard)).OrderBy(standard => standard.Weight).ToList();
-            return standardContainers;
-        }
-
-        //Note: add containers to ship as well to measure max weight has been reached and to check which containers are gonna be loaded onto the ship.
-        //Note: weight comparison working (no control ship weight) if first row limit has been reached cooled container is not added
-        public void Plan()
-        {
-            //step 1 add all cooled containers to the front y=0           
-            FillRow(GetCooledContainers(), _ship.GetShipSpots(0));
-
-            //Step 2 fill the middle part with containers valuables and cooled can't be placed here.        
-            FillRange(GetAllStandardContainers(), _ship, 1, _ship.Width - 1);
-
-            //Step 3 fill front with resting normal containers and valuables and fill back.
-            AddValuableContainers();
-        }
-
         public IReadOnlyList<Container> GetShipContainers()
         {
             return _ship.GetShipsContainers();
         }
 
-        //Note: add range from min to max YPosition
-        //Note: Need to add a check if adding a container is still possible.
-        //Mass filling for the center Rows.
-        public void FillRange(List<Container> containers, Ship ship, int min, int max)
+        public void Plan()
         {
-            var xPos = 0;
-            var yPos = min;
-            var sideSwitch = false;
+            //If too many valuable containers are about to be loaded
+            if (_containers.Count(container => container.FreightType == Enums.FreightType.Valuable) >
+                _ship.GetAllPositions().Count()) throw new Exception("Too many Valuable containers for ship");
+
+            //If ship weight isn't filled for 50%
+            if(_containers.Sum(container => container.Weight) < _ship.MaxWeight/2) throw  new Exception("Minimum ship weight hasn't been reached");
+
+            //Sort
+           _containers = _containers.OrderBy(container => container.FreightType).ThenBy(container => container.Weight).ToList();
+
+           //Add Cooled Containers
+           LoadCooledContainers(_containers);
+           LoadNormalContainers(_containers);
+           LoadValuableContainers(_containers);
+
+        }            
+
+        private void LoadCooledContainers(IEnumerable<Container> containers)
+        {
+            containers = containers.Where(container => container.FreightType == Enums.FreightType.Cooled);
             foreach (var container in containers)
             {
-                if (xPos > ship.Width)
-                {
-                    if (sideSwitch == false)
-                    {
-                        var shipSpot = ship.GetSpotForContainer(xPos, yPos, container);
-                        shipSpot.AddContainer(container);
-                        sideSwitch = true;
-                    }
-                    else
-                    {
-                        var shipSpot = ship.GetSpotForContainer(ship.Width - xPos, yPos, container);
-                        shipSpot.AddContainer(container);
-                        sideSwitch = false;
-                    }
-                    xPos++;
-                }
-                else xPos = 0;
+               var positions = _ship.GetShipPositionsFromLightestSide().Where(pos => pos.YPos == 0);
+               if(!TryLoadContainer(container, positions)) throw new Exception("Couldn't load cooled containers");
             }
         }
 
-
-        public void FillRow(List<Container> containers, List<Position> spots)
+        private void LoadNormalContainers(IEnumerable<Container> containers)
         {
-            //sorting List low high, low+index, High-index
-            var index = 0;
-            var spotsSorted = new List<Position>();
-            while (spotsSorted.Count < spots.Count)
-            {
-                if (spotsSorted.Count == spots.Count) break;
-                spotsSorted.Add(spots[0 + index]);
-
-                if (spotsSorted.Count == spots.Count) break;
-                spotsSorted.Add(spots.Where(spot => spot.XPos == _ship.Width - index).ToList().First());
-                index++;
-            }
-
+            containers = containers.Where(container => container.FreightType == Enums.FreightType.Standard);
             foreach (var container in containers)
             {
-                for (var spotIndex = 0; spotIndex < spotsSorted.Count; spotIndex++)
+                var positions = _ship.GetShipPositionsFromLightestSide();
+                if(!TryLoadContainer(container,positions)) throw new Exception("Containers won't fit");
+            }
+            throw new NotImplementedException();
+        }
+
+        private void LoadValuableContainers(IEnumerable<Container> containers)
+        {
+            containers = containers.Where(container => container.FreightType == Enums.FreightType.Valuable);
+            throw new NotImplementedException();
+        }
+
+
+
+        private bool TryLoadContainer(Container container, IEnumerable<Position> positions)
+        {
+            foreach (var pos in positions)
+            {
+                if (pos.TryAddContainer(container))
                 {
-                    if (container.Weight + spot.Weight <= 120)
-                    {
-                        spot.AddContainer(container);
-                        _ship.AddContainerToShip(container);
-                        break;
-                    }
+                    return true;
                 }
             }
+
+            return false;
         }
-
-        public void AddValuableContainers()
-        {
-
-        }
-
-
-
 
     }
 }

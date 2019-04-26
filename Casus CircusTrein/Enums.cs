@@ -9,13 +9,13 @@ namespace Casus_CircusTrein
     public class Enums
     { 
 
-        public enum Diets
+        public enum Diet
         {
             Herbivore,
             Carnivore
         };
 
-        public enum Sizes 
+        public enum Size 
         {
             Small,
             Medium,

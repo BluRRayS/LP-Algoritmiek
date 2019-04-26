@@ -16,9 +16,9 @@ namespace CircusTrein_UnitTests
         public void GetsAnimalPointsCorrectly()
         {
             //Arrange
-            var animal1 = new Animal("smallAnimal",Enums.Sizes.Small,Enums.Diets.Herbivore);
-            var animal2 = new Animal("MediumAnimal", Enums.Sizes.Medium, Enums.Diets.Carnivore);
-            var animal3 = new Animal("smallAnimal", Enums.Sizes.Large, Enums.Diets.Herbivore);
+            var animal1 = new Animal("smallAnimal",Enums.Size.Small,Enums.Diet.Herbivore);
+            var animal2 = new Animal("MediumAnimal", Enums.Size.Medium, Enums.Diet.Carnivore);
+            var animal3 = new Animal("smallAnimal", Enums.Size.Large, Enums.Diet.Herbivore);
             var animal1Points = 0;
             var animal2Points = 0;
             var animal3Points = 0;
@@ -36,14 +36,14 @@ namespace CircusTrein_UnitTests
         public void ToStringWorksProperly()
         {
             //Arrange
-            var animal = new Animal("Lion",Enums.Sizes.Medium,Enums.Diets.Carnivore);
+            var animal = new Animal("Lion",Enums.Size.Medium,Enums.Diet.Carnivore);
             var toString =""; 
 
             //Act
             toString = animal.ToString();
 
             //Assert
-            Assert.IsTrue(toString=="Lion:"+Enums.Diets.Carnivore+":"+Enums.Sizes.Medium.ToString());
+            Assert.IsTrue(toString=="Lion:"+Enums.Diet.Carnivore+":"+Enums.Size.Medium.ToString());
         }
     }
 }

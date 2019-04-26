@@ -9,10 +9,10 @@ namespace Casus_CircusTrein
     public class Animal
     {
         public string Name { get; }
-        public Enums.Sizes Size { get; }
-        public Enums.Diets Diet { get; }
+        public Enums.Size Size { get; }
+        public Enums.Diet Diet { get; }
 
-        public Animal(string name, Enums.Sizes size, Enums.Diets diet)
+        public Animal(string name, Enums.Size size, Enums.Diet diet)
         {
             Name = name;
             Size = size;
@@ -23,9 +23,9 @@ namespace Casus_CircusTrein
         {
             switch (animal.Size)
             {
-                case Enums.Sizes.Small: return 1;
-                case Enums.Sizes.Medium: return 3;
-                case Enums.Sizes.Large: return 5;
+                case Enums.Size.Small: return 1;
+                case Enums.Size.Medium: return 3;
+                case Enums.Size.Large: return 5;
                 default: return 1;
             }
         }

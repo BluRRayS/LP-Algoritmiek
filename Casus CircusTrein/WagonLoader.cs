@@ -25,7 +25,7 @@ namespace Casus_CircusTrein
 
         private void BtnAddAnimal_Click(object sender, EventArgs e)
         {
-            train.AddAnimal(TxtBoxName.Text,(Enums.Sizes) ComboBoxSize.SelectedIndex,(Enums.Diets) ComboBoxDiet.SelectedIndex);
+            train.AddAnimal(TxtBoxName.Text,(Enums.Size) ComboBoxSize.SelectedIndex,(Enums.Diet) ComboBoxDiet.SelectedIndex);
             ListBoxAnimals.Items.Add(TxtBoxName.Text+"-"+ComboBoxSize.SelectedItem.ToString()+"-"+ComboBoxDiet.SelectedItem.ToString());
         }
 

@@ -24,7 +24,8 @@ namespace Casus_CircusTrein
 
         public int CalculateCartAmount()
         {
-            foreach (var animal in animals.OrderByDescending(animal => animal.Diet).ThenByDescending(animal=> animal.Size))
+            AddCarnivoresToCarts(animals.Where(animal => animal.Diet == Enums.Diet.Carnivore));
+            foreach (var animal in animals.Where(animal => animal.Diet == Enums.Diet.Herbivore).OrderByDescending(animal=> animal.Size))
             {
                 AddAnimalToACart(animal);
             }
@@ -33,6 +34,7 @@ namespace Casus_CircusTrein
 
         private void AddAnimalToACart(Animal animal)
         {
+            
             foreach (var cart in carts)
             {
                 if (!cart.AnimalFits(animal)) continue;
@@ -42,7 +44,7 @@ namespace Casus_CircusTrein
             carts.Add(new Cart(animal));
         }    
 
-        public void AddAnimal(string name, Enums.Sizes size, Enums.Diets diet)
+        public void AddAnimal(string name, Enums.Size size, Enums.Diet diet)
         {
             animals.Add(new Animal(name, size, diet));
         }
@@ -61,6 +63,14 @@ namespace Casus_CircusTrein
         {
             animals.Clear();
             carts.Clear();
+        }
+
+        public void AddCarnivoresToCarts(IEnumerable<Animal> carnivores)
+        {
+            foreach (var carnivore in carnivores)
+            {
+                carts.Add(new Cart(carnivore));
+            }
         }
     }
 }

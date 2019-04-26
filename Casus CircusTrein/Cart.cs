@@ -33,8 +33,22 @@ namespace Casus_CircusTrein
 
         public bool AnimalFits(Animal animalToBeAdded)
         {
-            return ((Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.Any(animal =>
-                        animal.Diet == Enums.Diets.Carnivore && animal.Size >= animalToBeAdded.Size)));
+            //return ((Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.Any(animal =>
+            //animal.Diet == Enums.Diet.Carnivore && animal.Size >= animalToBeAdded.Size)));
+
+            //if (animalToBeAdded.Diet == Enums.Diet.Herbivore)
+            //{
+                return (Points + animalToBeAdded.GetAnimalPoints(animalToBeAdded) <= MaxCarPoints) && !(_animals.OrderByDescending(animal => animal.Diet).Any(animal =>
+                           animal.Diet == Enums.Diet.Carnivore && animal.Size >= animalToBeAdded.Size));
+            //}
+
+            //else if (animalToBeAdded.Diet == Enums.Diet.Carnivore && _animals.Any(animal => animal.Diet == Enums.Diet.Carnivore))
+            //{
+            //    return false;
+            //}
+
+            //return (animalToBeAdded.Diet == Enums.Diet.Carnivore && !_animals.Any(animal => animal.Diet == Enums.Diet.Carnivore) && !_animals.Any(animal => animal.Diet == Enums.Diet.Herbivore && animal.Size < animalToBeAdded.Size));
+
         }
 
     }

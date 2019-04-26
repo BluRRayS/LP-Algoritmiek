@@ -11,8 +11,8 @@ namespace Casus_Container_Vervoer.Models
         private readonly List<Container> _containers;
         public Position(int xPos, int yPos)
         {
-            this.XPos = xPos;
-            this.YPos = yPos;
+            XPos = xPos;
+            YPos = yPos;
             _containers = new List<Container>();
         }
 

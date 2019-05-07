@@ -19,7 +19,6 @@ namespace Casus_Container_Vervoer.Models
         public double Weight { get; private set; }
         public int XPos { get; private set; }
         public int YPos { get; private set; }
-        public int ZPos { get; private set; }
 
         public void AddContainer(Container container)
         {

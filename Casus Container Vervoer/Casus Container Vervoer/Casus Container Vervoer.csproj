@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerLoaders\CooledContainerLoader.cs" />
+    <Compile Include="IContainerLoader.cs" />
+    <Compile Include="ContainerLoaders\StandardContainerLoader.cs" />
+    <Compile Include="ContainerLoaders\ValuableContainerLoader.cs" />
     <Compile Include="Views\Form.cs">
       <SubType>Form</SubType>
     </Compile>

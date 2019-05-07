@@ -45,6 +45,7 @@ namespace Casus_Container_Vervoer.Models
             //If ship weight isn't filled for 50%
             if(_containers.Sum(container => container.Weight) < _ship.MaxWeight/2) throw  new Exception("Minimum ship weight hasn't been reached");
 
+
             //Sort
            _containers = _containers.OrderBy(container => container.FreightType).ThenBy(container => container.Weight).ToList();
 
@@ -79,6 +80,11 @@ namespace Casus_Container_Vervoer.Models
         private void LoadValuableContainers(IEnumerable<Container> containers)
         {
             containers = containers.Where(container => container.FreightType == Enums.FreightType.Valuable);
+            foreach (var container in containers)
+            {
+                var positions = _ship.GetShipPositionsFromLightestSide();
+
+            }
             throw new NotImplementedException();
         }
 
@@ -86,15 +92,7 @@ namespace Casus_Container_Vervoer.Models
 
         private bool TryLoadContainer(Container container, IEnumerable<Position> positions)
         {
-            foreach (var pos in positions)
-            {
-                if (pos.TryAddContainer(container))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return positions.Any(pos => pos.TryAddContainer(container));
         }
 
     }

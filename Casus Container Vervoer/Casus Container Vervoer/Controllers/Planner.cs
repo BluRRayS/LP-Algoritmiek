@@ -83,7 +83,7 @@ namespace Casus_Container_Vervoer.Models
             foreach (var container in containers)
             {
                 var positions = _ship.GetShipPositionsFromLightestSide();
-
+                if (!TryLoadContainer(container, positions)) throw new Exception("Couldn't load valuable containers");
             }
             throw new NotImplementedException();
         }

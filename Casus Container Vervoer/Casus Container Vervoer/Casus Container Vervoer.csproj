@@ -47,9 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContainerLoaders\CooledContainerLoader.cs" />
-    <Compile Include="IContainerLoader.cs" />
+    <Compile Include="Interfaces\IContainerLoader.cs" />
     <Compile Include="ContainerLoaders\StandardContainerLoader.cs" />
     <Compile Include="ContainerLoaders\ValuableContainerLoader.cs" />
+    <Compile Include="Interfaces\ICooledContainerLoader.cs" />
+    <Compile Include="Interfaces\IStandardContainerLoader.cs" />
+    <Compile Include="Interfaces\IValuableContainerLoader.cs" />
     <Compile Include="Views\Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +61,7 @@
     </Compile>
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\Helpers\Enums.cs" />
-    <Compile Include="Controllers\Planner.cs" />
+    <Compile Include="Planner.cs" />
     <Compile Include="Models\Ship.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Program.cs" />

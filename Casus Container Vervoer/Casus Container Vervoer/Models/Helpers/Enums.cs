@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Casus_Container_Vervoer.Models.Helpers
 {
-    internal class Enums
+    public  class Enums
     {
         public enum FreightType
         {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Casus_Container_Vervoer.Models
 {
-    internal class Position
+    public class Position
     {
+        private const double MaxWeight = 120;
         private readonly List<Container> _containers;
         public Position(int xPos, int yPos)
         {
@@ -16,6 +17,7 @@ namespace Casus_Container_Vervoer.Models
             _containers = new List<Container>();
         }
 
+        
         public double Weight { get; private set; }
         public int XPos { get; private set; }
         public int YPos { get; private set; }
@@ -31,14 +33,14 @@ namespace Casus_Container_Vervoer.Models
             return _containers;
         }
 
-        private double GetPositionWeight()
+        public double GetPositionWeight()
         {
             return Weight - _containers.First().Weight;
         }
 
         public bool TryAddContainer(Container container)
         {
-            return Weight + container.Weight <= GetPositionWeight();
+            return ((container.Weight + GetPositionWeight())<= MaxWeight);
         }
     }
 }

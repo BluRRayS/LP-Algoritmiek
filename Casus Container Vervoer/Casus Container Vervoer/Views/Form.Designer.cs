@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ListBoxShipContainers = new System.Windows.Forms.ListBox();
             this.SortContainersBtn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@
             this.NUDMaxWeight = new System.Windows.Forms.NumericUpDown();
             this.NUDWidth = new System.Windows.Forms.NumericUpDown();
             this.NUDLenght = new System.Windows.Forms.NumericUpDown();
-            this.ListBoxShipContainers = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUDContainerWeight)).BeginInit();
@@ -66,8 +66,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ship View";
             // 
+            // ListBoxShipContainers
+            // 
+            this.ListBoxShipContainers.FormattingEnabled = true;
+            this.ListBoxShipContainers.Location = new System.Drawing.Point(6, 18);
+            this.ListBoxShipContainers.Name = "ListBoxShipContainers";
+            this.ListBoxShipContainers.Size = new System.Drawing.Size(202, 446);
+            this.ListBoxShipContainers.TabIndex = 1;
+            // 
             // SortContainersBtn
             // 
+            this.SortContainersBtn.Enabled = false;
             this.SortContainersBtn.Location = new System.Drawing.Point(282, 519);
             this.SortContainersBtn.Name = "SortContainersBtn";
             this.SortContainersBtn.Size = new System.Drawing.Size(149, 23);
@@ -231,14 +240,6 @@
             this.NUDLenght.Name = "NUDLenght";
             this.NUDLenght.Size = new System.Drawing.Size(86, 20);
             this.NUDLenght.TabIndex = 0;
-            // 
-            // ListBoxShipContainers
-            // 
-            this.ListBoxShipContainers.FormattingEnabled = true;
-            this.ListBoxShipContainers.Location = new System.Drawing.Point(6, 18);
-            this.ListBoxShipContainers.Name = "ListBoxShipContainers";
-            this.ListBoxShipContainers.Size = new System.Drawing.Size(202, 446);
-            this.ListBoxShipContainers.TabIndex = 1;
             // 
             // Form
             // 

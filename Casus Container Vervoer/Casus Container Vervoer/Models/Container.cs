@@ -7,7 +7,7 @@ using Casus_Container_Vervoer.Models.Helpers;
 
 namespace Casus_Container_Vervoer.Models
 {
-    internal class Container
+    public class Container
     {
         private static double _emptyWeight;
         private static double _maxWeight;
@@ -33,7 +33,7 @@ namespace Casus_Container_Vervoer.Models
 
         public override string ToString()
         {
-            return "FreightType:"+FreightType.ToString()+"Weight:"+Weight;
+            return "FreightType:"+FreightType.ToString()+" | Weight:"+Weight;
         }
     }
 }

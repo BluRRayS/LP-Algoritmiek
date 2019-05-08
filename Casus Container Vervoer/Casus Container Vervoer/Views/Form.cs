@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Casus_Container_Vervoer.Models;
@@ -31,6 +32,7 @@ namespace Casus_Container_Vervoer
                     Convert.ToInt32(NUDMaxWeight.Value));
                 _planner = new Planner(ship);
                 AddShipBtn.Enabled = false;
+                SortContainersBtn.Enabled = true;
             }
             else
             {
@@ -46,15 +48,8 @@ namespace Casus_Container_Vervoer
 
         private void SortContainersBtn_Click(object sender, EventArgs e)
         {
-            _planner.Plan();
-            var i = 0;
-            var containersOnShip = _planner.GetShipContainers();
-            foreach (var container in containersOnShip)
-            {
-                ListBoxShipContainers.Items.Add(containersOnShip[i].ToString());
-                i++;
-            }
-           
+            var th = new Thread(plan);
+            th.Start();                    
         }
 
         private void RefreshContainerListBox()
@@ -64,6 +59,18 @@ namespace Casus_Container_Vervoer
             for (var i = 0; i > containersToSort.Count; i++)
             {
                 ListBoxShipContainers.Items.Add(containersToSort[i].ToString());
+            }
+        }
+
+        private void plan()
+        {
+            _planner.Plan();
+            var i = 0;
+            var containersOnShip = _planner.GetShipContainers();
+            foreach (var container in containersOnShip)
+            {
+                ListBoxShipContainers.Items.Add(containersOnShip[i].ToString());
+                i++;
             }
         }
     }

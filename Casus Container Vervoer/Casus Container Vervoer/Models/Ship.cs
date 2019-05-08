@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Casus_Container_Vervoer.Models
 {
-    internal class Ship
+    public class Ship
     {
-        private List<Position> _positions;
+        private readonly List<Position> _positions;
         private List<Container> _containers;
 
         public Ship(int width, int length, double maxCargoWeight)
@@ -62,6 +62,12 @@ namespace Casus_Container_Vervoer.Models
         public IEnumerable<Position> GetAllPositions()
         {
             return _positions;
+        }
+
+        public void AddContainerToShipPosition(Container container, int xPos, int yPos)
+        {
+            var position = _positions.First(pos => pos.XPos == xPos && pos.YPos == yPos);
+            position.AddContainer(container);
         }
 
     }

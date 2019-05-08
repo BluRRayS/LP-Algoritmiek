@@ -7,7 +7,7 @@ using Casus_Container_Vervoer.Models;
 
 namespace Casus_Container_Vervoer
 {
-    internal  interface IContainerLoader
+    public  interface IContainerLoader
     {
         Position FindOptimalPosition(IEnumerable<Position> positions, Container containers);
     }

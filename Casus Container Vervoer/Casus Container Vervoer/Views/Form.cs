@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Casus_Container_Vervoer.Models;
 using Casus_Container_Vervoer.Models.Helpers;
-using Microsoft.Win32;
 
-namespace Casus_Container_Vervoer
+namespace Casus_Container_Vervoer.Views
 {
     public partial class Form : System.Windows.Forms.Form
     {
@@ -20,7 +12,7 @@ namespace Casus_Container_Vervoer
         public Form()
         {
             InitializeComponent();
-            ComboBoxFreightTypes.Items.AddRange(Enum.GetNames(typeof(Enums.FreightType)));
+            ComboBoxFreightTypes?.Items.AddRange(Enum.GetNames(typeof(Enums.FreightType)));
         }
 
 
@@ -48,7 +40,7 @@ namespace Casus_Container_Vervoer
 
         private void SortContainersBtn_Click(object sender, EventArgs e)
         {
-            var th = new Thread(plan);
+            var th = new Thread(Plan);
             th.Start();                    
         }
 
@@ -62,7 +54,7 @@ namespace Casus_Container_Vervoer
             }
         }
 
-        private void plan()
+        private void Plan()
         {
             _planner.Plan();
             var i = 0;

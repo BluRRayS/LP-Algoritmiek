@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Casus_Container_Vervoer.Interfaces;
 using Casus_Container_Vervoer.Models;
 
-namespace Casus_Container_Vervoer
+namespace Casus_Container_Vervoer.ContainerLoaders
 {
     public  class CooledContainerLoader :ICooledContainerLoader
     {
-        public Position FindOptimalPosition(IEnumerable<Position> positions, Container containers)
+        public Position FindOptimalPosition(IEnumerable<Position> positions, Container container)
         {
-            throw new NotImplementedException();
-            foreach (var position in positions)
-            {
-                
-            }
+            positions = positions.OrderBy(position => position.Weight);
+            return positions.First(position => position.TryAddContainer(container));
         }
+
 
         public bool TryLoadContainer(Container container, IEnumerable<Position> positions)
         {

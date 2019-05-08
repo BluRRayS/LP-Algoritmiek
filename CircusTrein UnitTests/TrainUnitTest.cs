@@ -202,10 +202,9 @@ namespace CircusTrein_UnitTests
                 train.AddAnimal(animal);
             }
             cartAmount = train.CalculateCartAmount();
-            animalCount = train.GetTrainCarts().Sum(cart => cart.GetAnimals().Count);
             //Assert
-            animalCount = 17;
-
+            animalCount = 18;
+            Assert.IsTrue(animalCount == train.GetTrainCarts().Sum(cart => cart.GetAnimals().Count));
 
         }
     }

@@ -1,9 +1,8 @@
-﻿using System;
-using Casus_Container_Vervoer.Models;
+﻿using Casus_Container_Vervoer.Models;
 using Casus_Container_Vervoer.Models.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_Test_Container_Vervoer
+namespace Unit_Test_Container_Vervoer.UnitTests
 {
     [TestClass]
     public class ContainerUnitTests

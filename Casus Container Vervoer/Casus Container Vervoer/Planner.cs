@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Casus_Container_Vervoer.ContainerLoaders;
+using Casus_Container_Vervoer.Interfaces;
+using Casus_Container_Vervoer.Models;
 using Casus_Container_Vervoer.Models.Helpers;
 
-namespace Casus_Container_Vervoer.Models
+namespace Casus_Container_Vervoer
 {
     internal class Planner
     {
         private List<Container> _containers;
         private readonly Ship _ship;
-        private readonly CooledContainerLoader _cooledContainerLoader;
-        private readonly StandardContainerLoader _standardContainerLoader;
-        private readonly ValuableContainerLoader _valuableContainerLoader;
+        private readonly ICooledContainerLoader _cooledContainerLoader;
+        private readonly IStandardContainerLoader _standardContainerLoader;
+        private readonly IValuableContainerLoader _valuableContainerLoader;
 
         public Planner(Ship ship)
         {
@@ -69,11 +68,8 @@ namespace Casus_Container_Vervoer.Models
             //Sort
            _containers = _containers.OrderBy(container => container.FreightType).ThenBy(container => container.Weight).ToList();
 
-           //Add Cooled Containers to ship
            LoadCooledContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Cooled));
-           //Add Normal Containers to ship
            LoadNormalContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Standard));
-           //Add Valuable Containers to ship
            LoadValuableContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Valuable));
         }            
 
@@ -83,9 +79,7 @@ namespace Casus_Container_Vervoer.Models
             {
                var positions = _ship.GetShipPositionsFromLightestSide().Where(pos => pos.YPos == 0).ToList();
                if(!_cooledContainerLoader.TryLoadContainer(container,positions)) throw new Exception("Couldn't load cooled containers");
-               //Find optimal position
                var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-               //Load on optimal position
                _ship.AddContainerToShipPosition(container,optimalPosition.XPos,optimalPosition.YPos);
             }
         }
@@ -95,10 +89,8 @@ namespace Casus_Container_Vervoer.Models
             foreach (var container in containers)
             {
                 var positions = _ship.GetShipPositionsFromLightestSide().ToList();
-                if(!_standardContainerLoader.TryLoadContainer(container,positions)) throw new Exception("Containers won't fit");
-                //Find optimal position
+                if(!_standardContainerLoader.TryLoadContainer(container,positions)) throw new Exception("Standard Containers won't fit");
                 var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-                //Load on optimal position
                 _ship.AddContainerToShipPosition(container, optimalPosition.XPos, optimalPosition.YPos);
             }
         }
@@ -110,9 +102,7 @@ namespace Casus_Container_Vervoer.Models
             {
                 var positions = _ship.GetShipPositionsFromLightestSide().ToList();
                 if (!_valuableContainerLoader.TryLoadValuableContainer(container, positions)) throw new Exception("Couldn't load valuable containers");
-                //Find optimal position
                 var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-                //Load on optimal position
                 _ship.AddContainerToShipPosition(container, optimalPosition.XPos, optimalPosition.YPos);
             }
 

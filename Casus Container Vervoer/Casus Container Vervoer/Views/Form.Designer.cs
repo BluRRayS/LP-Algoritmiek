@@ -1,4 +1,4 @@
-﻿namespace Casus_Container_Vervoer
+﻿namespace Casus_Container_Vervoer.Views
 {
     partial class Form
     {

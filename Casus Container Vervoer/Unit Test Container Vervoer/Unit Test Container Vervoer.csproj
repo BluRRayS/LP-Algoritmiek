@@ -54,6 +54,7 @@
     <Compile Include="UnitTests\PositionUnitTests.cs" />
     <Compile Include="UnitTests\ContainerUnitTests.cs" />
     <Compile Include="UnitTests\ContainerLoaderUnitTests.cs" />
+    <Compile Include="UnitTests\PlannerUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

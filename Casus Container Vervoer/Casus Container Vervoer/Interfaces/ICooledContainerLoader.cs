@@ -9,7 +9,7 @@ namespace Casus_Container_Vervoer.Interfaces
 {
     public  interface ICooledContainerLoader :IContainerLoader
     {
-        bool TryLoadContainer(Container container, IEnumerable<Position> positions);
+        bool TryLoadContainer(IContainer container, IEnumerable<Position> positions);
 
     }
 }

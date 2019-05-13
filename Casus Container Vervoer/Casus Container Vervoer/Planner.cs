@@ -31,12 +31,12 @@ namespace Casus_Container_Vervoer
             _containers.Add(new Container(containerWeight, freightType));
         }
 
-        public IReadOnlyList<Container> GetContainersToSort()
+        public IReadOnlyList<IContainer> GetContainersToSort()
         {
             return _containers;
         }
 
-        public IReadOnlyList<Container> GetShipContainers()
+        public IReadOnlyList<IContainer> GetShipContainers()
         {
             return _ship.GetShipsContainers();
         }
@@ -60,10 +60,10 @@ namespace Casus_Container_Vervoer
         public void Plan()
         {
             //If too many valuable containers are about to be loaded
-            if (IsAmountOfValuableContainersTooMuch()) throw new Exception("Too many Valuable containers for ship");
+            if (IsAmountOfValuableContainersTooMuch()) throw new Exception("Too many Valuable containers for ship.");
 
             //If ship weight isn't filled for 50%
-            if(!IsSumContainersHeavyEnoughForShip()) throw  new Exception("Minimum ship weight hasn't been reached");
+            if(!IsSumContainersHeavyEnoughForShip()) throw  new Exception("Minimum ship weight hasn't been reached.");
 
             //Sort
            _containers = _containers.OrderBy(container => container.FreightType).ThenBy(container => container.Weight).ToList();
@@ -71,39 +71,44 @@ namespace Casus_Container_Vervoer
            LoadCooledContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Cooled));
            LoadNormalContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Standard));
            LoadValuableContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Valuable));
+
+           if (!_ship.BalanceIsOk())
+           {
+               throw new InvalidOperationException("With current container composition ship is out of balance.");
+           }
         }            
 
-        private void LoadCooledContainers(IEnumerable<Container> containers)
+        private void LoadCooledContainers(IEnumerable<IContainer> containers)
         {
             foreach (var container in containers)
             {
                var positions = _ship.GetShipPositionsFromLightestSide().Where(pos => pos.YPos == 0).ToList();
-               if(!_cooledContainerLoader.TryLoadContainer(container,positions)) throw new Exception("Couldn't load cooled containers");
+               if(!_cooledContainerLoader.TryLoadContainer(container,positions)) throw new InvalidOperationException("Couldn't load cooled containers.");
                var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-               _ship.AddContainerToShipPosition(container,optimalPosition.XPos,optimalPosition.YPos);
+               _ship.AddContainerToShipPosition(new Container(container.Weight, container.FreightType), optimalPosition.XPos,optimalPosition.YPos);
             }
         }
 
-        private void LoadNormalContainers(IEnumerable<Container> containers)
+        private void LoadNormalContainers(IEnumerable<IContainer> containers)
         {
             foreach (var container in containers)
             {
                 var positions = _ship.GetShipPositionsFromLightestSide().ToList();
-                if(!_standardContainerLoader.TryLoadContainer(container,positions)) throw new Exception("Standard Containers won't fit");
+                if(!_standardContainerLoader.TryLoadContainer(container,positions)) throw new InvalidOperationException("Standard Containers won't fit.");
                 var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-                _ship.AddContainerToShipPosition(container, optimalPosition.XPos, optimalPosition.YPos);
+                _ship.AddContainerToShipPosition(new Container(container.Weight,container.FreightType), optimalPosition.XPos, optimalPosition.YPos);
             }
         }
 
-        private void LoadValuableContainers(IEnumerable<Container> containers)
+        private void LoadValuableContainers(IEnumerable<IContainer> containers)
         {
             containers = containers.Where(container => container.FreightType == Enums.FreightType.Valuable);
             foreach (var container in containers)
             {
                 var positions = _ship.GetShipPositionsFromLightestSide().ToList();
-                if (!_valuableContainerLoader.TryLoadValuableContainer(container, positions)) throw new Exception("Couldn't load valuable containers");
+                if (!_valuableContainerLoader.TryLoadValuableContainer(container, positions)) throw new InvalidOperationException("Couldn't load valuable containers.");
                 var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
-                _ship.AddContainerToShipPosition(container, optimalPosition.XPos, optimalPosition.YPos);
+                _ship.AddContainerToShipPosition(new Container(container.Weight, container.FreightType), optimalPosition.XPos, optimalPosition.YPos);
             }
 
         }

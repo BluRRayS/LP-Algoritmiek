@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Casus_Container_Vervoer.Interfaces;
 using Casus_Container_Vervoer.Models.Helpers;
 
 namespace Casus_Container_Vervoer.Models
 {
-    public class Container
+    public class Container:IContainer
     {
         private static double _emptyWeight;
         private static double _maxWeight;
@@ -28,8 +29,8 @@ namespace Casus_Container_Vervoer.Models
             FreightType = type;
         }
 
-        public double Weight { get; private set; }
-        public Enums.FreightType FreightType { get; private set; }
+        public double Weight { get; set; }
+        public Enums.FreightType FreightType { get; set; }
 
         public override string ToString()
         {

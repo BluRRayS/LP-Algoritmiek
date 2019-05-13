@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Casus_Container_Vervoer.Interfaces;
 
 namespace Casus_Container_Vervoer.Models
 {
@@ -22,13 +23,14 @@ namespace Casus_Container_Vervoer.Models
         public int XPos { get; private set; }
         public int YPos { get; private set; }
 
-        public void AddContainer(Container container)
+        public void AddContainer(IContainer container)
         {
-            _containers.Add(container);
+            var containerToAdd = new Container(container.Weight,container.FreightType);
+            _containers.Add(containerToAdd);
             Weight += container.Weight;
         }
 
-        public IReadOnlyCollection<Container> GetContainers()
+        public IReadOnlyCollection<IContainer> GetContainers()
         {
             return _containers;
         }
@@ -38,7 +40,7 @@ namespace Casus_Container_Vervoer.Models
             return Weight - _containers.First().Weight;
         }
 
-        public bool TryAddContainer(Container container)
+        public bool TryAddContainer(IContainer container)
         {
             return ((container.Weight + GetPositionWeight())<= MaxWeight);
         }

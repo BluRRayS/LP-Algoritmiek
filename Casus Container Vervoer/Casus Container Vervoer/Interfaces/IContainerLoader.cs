@@ -5,6 +5,6 @@ namespace Casus_Container_Vervoer.Interfaces
 {
     public  interface IContainerLoader
     {
-        Position FindOptimalPosition(IEnumerable<Position> positions, Container container);
+        Position FindOptimalPosition(IEnumerable<Position> positions, IContainer container);
     }
 }

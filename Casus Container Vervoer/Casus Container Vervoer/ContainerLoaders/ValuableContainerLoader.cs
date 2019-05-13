@@ -9,13 +9,14 @@ namespace Casus_Container_Vervoer.ContainerLoaders
 {
     public  class ValuableContainerLoader : IValuableContainerLoader
     {
-        public Position FindOptimalPosition(IEnumerable<Position> positions, Container containers)
+        public Position FindOptimalPosition(IEnumerable<Position> positions, IContainer container)
         {
-            throw new NotImplementedException();
+            positions = positions.OrderBy(position => position.Weight);
+            return positions.First(position => position.TryAddContainer(container));
         }
 
 
-        public bool TryLoadValuableContainer(Container container, IEnumerable<Position> positions)
+        public bool TryLoadValuableContainer(IContainer container, IEnumerable<Position> positions)
         {
             positions = positions.ToList();
             var maxYPos = positions.Max(posit => posit.YPos);
@@ -28,9 +29,9 @@ namespace Casus_Container_Vervoer.ContainerLoaders
 
             foreach (var position in positions.Where(pos => (pos.YPos> 0) && (pos.YPos < maxYPos)))
             {
-                var posInFront = positions.Where(pos => pos.YPos == position.YPos + 1);
-                var posBehind = positions.Where(pos => pos.YPos == position.YPos - 1);
-                if (position.TryAddContainer(container) == true)
+                var posInFront = positions.FirstOrDefault(pos => pos.YPos == position.YPos + 1 && pos.XPos == position.XPos);
+                var posBehind = positions.FirstOrDefault(pos => pos.YPos == position.YPos - 1 && pos.XPos == position.XPos);
+                if (position.TryAddContainer(container) && posBehind.GetContainers().Count <= position.GetContainers().Count && posInFront.GetContainers().Count <= position.GetContainers().Count  )
                 {
                     return true;
                 }             

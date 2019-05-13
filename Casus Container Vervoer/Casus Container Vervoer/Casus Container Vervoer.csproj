@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContainerLoaders\CooledContainerLoader.cs" />
+    <Compile Include="Interfaces\IContainer.cs" />
     <Compile Include="Interfaces\IContainerLoader.cs" />
     <Compile Include="ContainerLoaders\StandardContainerLoader.cs" />
     <Compile Include="ContainerLoaders\ValuableContainerLoader.cs" />

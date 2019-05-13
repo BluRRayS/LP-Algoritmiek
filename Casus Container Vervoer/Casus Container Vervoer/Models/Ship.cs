@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Casus_Container_Vervoer.Models
@@ -10,6 +12,7 @@ namespace Casus_Container_Vervoer.Models
     {
         private readonly List<Position> _positions;
         private List<Container> _containers;
+        private const double MaxBalanceDifference = 20;
 
         public Ship(int width, int length, double maxCargoWeight)
         {
@@ -41,15 +44,27 @@ namespace Casus_Container_Vervoer.Models
             _containers = new List<Container>();
             foreach (var position in _positions)
             {
-                _containers.AddRange(position.GetContainers());
+                _containers.AddRange(position.GetContainers().Select(positionContainer => new Container(positionContainer.Weight, positionContainer.FreightType)));              
             }
             return _containers;
         }
 
         public IEnumerable<Position> GetShipPositionsFromLightestSide()
         {
-            var leftPositions = _positions.Where(pos => pos.XPos <= (Math.Round(Width / 2.0))).ToList();
-            var rightPositions = _positions.Where(pos => pos.XPos > (Math.Round(Width / 2.0))).ToList();
+            List<Position> leftPositions;
+            List<Position> rightPositions;
+            if (Width % 2 == 0)
+            {
+                leftPositions = _positions.Where(pos => pos.XPos < (Width/2)).ToList();
+                rightPositions = _positions.Where(pos => pos.XPos >= (Width/2)) .ToList();
+            }
+            else
+            {
+                leftPositions = _positions.Where(pos => pos.XPos < (Math.Round(Width / 2.0))).ToList();
+                rightPositions = _positions.Where(pos => pos.XPos >= (Math.Round(Width / 2.0))).ToList();
+            }
+
+           
             return(GetTotalPositionsWeight(leftPositions) < GetTotalPositionsWeight(rightPositions)) ? leftPositions:rightPositions;
         }
 
@@ -68,6 +83,24 @@ namespace Casus_Container_Vervoer.Models
         {
             var position = _positions.First(pos => pos.XPos == xPos && pos.YPos == yPos);
             position.AddContainer(container);
+        }
+
+        public bool BalanceIsOk()
+        {
+            double leftPositions;
+            double rightPositions;
+            if (Width % 2 == 0)
+            {
+                leftPositions = _positions.Where(pos => pos.XPos < (Width / 2)).ToList().Sum(pos => pos.Weight);
+                rightPositions = _positions.Where(pos => pos.XPos >= (Width / 2)).ToList().Sum(pos => pos.Weight);
+            }
+            else
+            {
+                leftPositions = _positions.Where(pos => pos.XPos < (Math.Round(Width / 2.0))).ToList().Sum(pos => pos.Weight);
+                rightPositions = _positions.Where(pos => pos.XPos >= (Math.Round(Width / 2.0))).ToList().Sum(pos => pos.Weight);
+            }
+            var difference = ((leftPositions - rightPositions) / ((leftPositions + rightPositions) / 2)) * 100;
+            return difference < MaxBalanceDifference && difference>=0;
         }
 
     }

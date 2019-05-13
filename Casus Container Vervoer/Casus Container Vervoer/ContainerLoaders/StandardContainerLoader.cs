@@ -8,14 +8,14 @@ namespace Casus_Container_Vervoer.ContainerLoaders
 {
     public  class StandardContainerLoader : IStandardContainerLoader
     {
-        public Position FindOptimalPosition(IEnumerable<Position> positions, Container container)
+        public Position FindOptimalPosition(IEnumerable<Position> positions, IContainer container)
         {
             positions = positions.OrderBy(position => position.Weight);
             return positions.First(position => position.TryAddContainer(container));
         }
 
 
-        public bool TryLoadContainer(Container container, IEnumerable<Position> positions)
+        public bool TryLoadContainer(IContainer container, IEnumerable<Position> positions)
         {
             return positions.Any(pos => pos.TryAddContainer(container));
         }

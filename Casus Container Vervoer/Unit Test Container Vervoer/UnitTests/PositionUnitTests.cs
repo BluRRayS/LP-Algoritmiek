@@ -51,7 +51,7 @@ namespace Unit_Test_Container_Vervoer.UnitTests
             position.AddContainer(container1);
             position.AddContainer(container2);
 
-            Assert.IsTrue(position.GetPositionWeight() == 30);
+            Assert.IsTrue(position.GetPositionWeight() == 60);
         }
 
         [TestMethod]

@@ -100,7 +100,7 @@ namespace Casus_Container_Vervoer.Models
                 rightPositions = _positions.Where(pos => pos.XPos >= (Math.Round(Width / 2.0))).ToList().Sum(pos => pos.Weight);
             }
             var difference = ((leftPositions - rightPositions) / ((leftPositions + rightPositions) / 2)) * 100;
-            return difference < MaxBalanceDifference && difference>=0;
+            return difference <= MaxBalanceDifference && difference>=-20;
         }
 
     }

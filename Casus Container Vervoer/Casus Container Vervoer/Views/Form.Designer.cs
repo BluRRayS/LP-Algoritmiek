@@ -128,6 +128,7 @@
             // 
             // AddContainerBtn
             // 
+            this.AddContainerBtn.Enabled = false;
             this.AddContainerBtn.Location = new System.Drawing.Point(119, 90);
             this.AddContainerBtn.Name = "AddContainerBtn";
             this.AddContainerBtn.Size = new System.Drawing.Size(75, 23);

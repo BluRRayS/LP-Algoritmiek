@@ -24,6 +24,7 @@ namespace Casus_Container_Vervoer.Views
                     Convert.ToInt32(NUDMaxWeight.Value));
                 _planner = new Planner(ship);
                 AddShipBtn.Enabled = false;
+                AddContainerBtn.Enabled = true;
                 SortContainersBtn.Enabled = true;
             }
             else
@@ -40,6 +41,7 @@ namespace Casus_Container_Vervoer.Views
 
         private void SortContainersBtn_Click(object sender, EventArgs e)
         {
+            AddContainerBtn.Enabled = false;
             var th = new Thread(Plan);
             th.Start();                    
         }
@@ -58,12 +60,15 @@ namespace Casus_Container_Vervoer.Views
         {
             _planner.Plan();
             var i = 0;
-            var containersOnShip = _planner.GetShipContainers();
-            foreach (var container in containersOnShip)
+            var ShipPositions = _planner.GetShipComposition();
+            foreach (var position in ShipPositions)
             {
-                ListBoxShipContainers.Items.Add(containersOnShip[i].ToString());
-                i++;
+                foreach (var container in position.GetContainers())
+                {
+                    ListBoxShipContainers.Items.Add(position.XPos+":"+position.YPos+"|" + container.ToString());                
+                }
             }
+            AddContainerBtn.Enabled = true;
         }
     }
 }

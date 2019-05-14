@@ -131,12 +131,7 @@ namespace Unit_Test_Container_Vervoer.UnitTests
 
             for (var i = 0; i < 4; i++)
             {
-                containers.Add(new Container(3, Enums.FreightType.Standard));
-            }
-
-            for (var i = 0; i < 4; i++)
-            {
-                containers.Add(new Container(2, Enums.FreightType.Standard));
+                containers.Add(new Container(5, Enums.FreightType.Standard));
             }
 
             foreach (var container in containers)

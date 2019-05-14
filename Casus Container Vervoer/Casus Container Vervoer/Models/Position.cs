@@ -23,6 +23,14 @@ namespace Casus_Container_Vervoer.Models
         public int XPos { get; private set; }
         public int YPos { get; private set; }
 
+        public IContainer IContainer
+        {
+            get => default(IContainer);
+            set
+            {
+            }
+        }
+
         public void AddContainer(IContainer container)
         {
             var containerToAdd = new Container(container.Weight,container.FreightType);

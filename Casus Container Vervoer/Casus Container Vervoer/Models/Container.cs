@@ -32,6 +32,22 @@ namespace Casus_Container_Vervoer.Models
         public double Weight { get; set; }
         public Enums.FreightType FreightType { get; set; }
 
+        public IContainer IContainer
+        {
+            get => default(IContainer);
+            set
+            {
+            }
+        }
+
+        public Enums Enums
+        {
+            get => default(Enums);
+            set
+            {
+            }
+        }
+
         public override string ToString()
         {
             return "FreightType:"+FreightType.ToString()+" | Weight:"+Weight;

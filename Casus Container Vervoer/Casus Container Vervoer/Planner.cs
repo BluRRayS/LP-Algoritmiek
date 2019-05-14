@@ -26,6 +26,14 @@ namespace Casus_Container_Vervoer
             _valuableContainerLoader = new ValuableContainerLoader();
         }
 
+        public Ship Ship
+        {
+            get => default(Ship);
+            set
+            {
+            }
+        }
+
         public void AddContainer(double containerWeight, string type)
         {
             var freightType = (Enums.FreightType)Enum.Parse(typeof(Enums.FreightType), type, true);
@@ -104,7 +112,7 @@ namespace Casus_Container_Vervoer
             {
                 var positions = _ship.GetShipPositionsFromLightestSide().ToList();
                 if(!_standardContainerLoader.TryLoadContainer(container,positions)) throw new InvalidOperationException("Standard Containers won't fit.");
-                var optimalPosition = _cooledContainerLoader.FindOptimalPosition(positions, container);
+                var optimalPosition = _standardContainerLoader.FindOptimalPosition(positions, container);
                 _ship.AddContainerToShipPosition(new Container(container.Weight,container.FreightType), optimalPosition.XPos, optimalPosition.YPos);
             }
         }

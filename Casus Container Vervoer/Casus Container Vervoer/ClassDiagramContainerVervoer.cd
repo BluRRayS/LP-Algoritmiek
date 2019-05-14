@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Casus_Container_Vervoer.Planner" Collapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAABAEAEAAASAgAAAACAAACAAAABwAACQAAAAEA=</HashCode>
+      <FileName>Planner.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ship" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Program" Collapsed="true">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.ContainerLoaders.CooledContainerLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAIAAAAAEAAAAAAAA=</HashCode>
+      <FileName>ContainerLoaders\CooledContainerLoader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ICooledContainerLoader" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Casus_Container_Vervoer.ContainerLoaders.StandardContainerLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABIAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ContainerLoaders\StandardContainerLoader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IStandardContainerLoader" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Casus_Container_Vervoer.ContainerLoaders.ValuableContainerLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAABAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ContainerLoaders\ValuableContainerLoader.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IValuableContainerLoader" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Models.Container" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAAAAAAAAAgAEAAAAAAAAACAAAAAIAAAAACAAAAA=</HashCode>
+      <FileName>Models\Container.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IContainer" />
+      <Property Name="Enums" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Models.Position" Collapsed="true">
+    <Position X="6.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACIAAAAAAAAAAAAAAACAgCACAAABQgAAACAAAAA=</HashCode>
+      <FileName>Models\Position.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="IContainer" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Models.Ship" Collapsed="true">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAABAAAAAAAEAUgAAAAAEBAAgAEwAAAQAAAAAAQAAA=</HashCode>
+      <FileName>Models\Ship.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Position" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Models.Helpers.Enums" Collapsed="true">
+    <Position X="4.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Helpers\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Properties.Resources" Collapsed="true">
+    <Position X="16.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Properties.Settings" Collapsed="true">
+    <Position X="16.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Casus_Container_Vervoer.Views.Form" Collapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAA6AACBACAAKAQACCIIAIAAABECABAAEAAAA=</HashCode>
+      <FileName>Views\Form.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Casus_Container_Vervoer.Interfaces.IContainer" Collapsed="true">
+    <Position X="4.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IContainer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Casus_Container_Vervoer.Interfaces.IContainerLoader" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IContainerLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Casus_Container_Vervoer.Interfaces.ICooledContainerLoader" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ICooledContainerLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Casus_Container_Vervoer.Interfaces.IStandardContainerLoader" Collapsed="true">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IStandardContainerLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Casus_Container_Vervoer.Interfaces.IValuableContainerLoader" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IValuableContainerLoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

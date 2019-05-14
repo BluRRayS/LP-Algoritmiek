@@ -8,6 +8,14 @@ namespace Casus_Container_Vervoer.ContainerLoaders
 {
     public  class CooledContainerLoader :ICooledContainerLoader
     {
+        public ICooledContainerLoader ICooledContainerLoader
+        {
+            get => default(ICooledContainerLoader);
+            set
+            {
+            }
+        }
+
         public Position FindOptimalPosition(IEnumerable<Position> positions, IContainer container)
         {
             positions = positions.OrderBy(position => position.Weight);

@@ -28,6 +28,14 @@ namespace Casus_Container_Vervoer.Models
         public int Length { get; private set; }
         public double MinWeight { get; private set; }
 
+        public Position Position
+        {
+            get => default(Position);
+            set
+            {
+            }
+        }
+
         private void AddGridToShip()
         {
             for (var y = 0; y < Length; y++)

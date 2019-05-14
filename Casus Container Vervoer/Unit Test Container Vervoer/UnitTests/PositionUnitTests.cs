@@ -42,7 +42,7 @@ namespace Unit_Test_Container_Vervoer.UnitTests
         }
 
         [TestMethod]
-        public void GetPositionWeightCorrectly()
+        public void GetPositionWeightCorrectlyTest1()
         {
             var container1 = new Container(30, Enums.FreightType.Standard);
             var container2 = new Container(30, Enums.FreightType.Valuable);
@@ -51,7 +51,7 @@ namespace Unit_Test_Container_Vervoer.UnitTests
             position.AddContainer(container1);
             position.AddContainer(container2);
 
-            Assert.IsTrue(position.GetPositionWeight() == 60);
+            Assert.IsTrue(position.GetPositionWeight() == 30.0);
         }
 
         [TestMethod]
@@ -83,6 +83,20 @@ namespace Unit_Test_Container_Vervoer.UnitTests
 
             Assert.IsTrue(position.TryAddContainer(container3));
             Assert.IsFalse(position.TryAddContainer(container4));
+        }
+
+        [TestMethod]
+        public void GetPositionWeightWorksCorrectlyTest2() 
+        {
+            //MaxWeight spot = 120
+            var container1 = new Container(120, Enums.FreightType.Standard);
+            var container2 = new Container(30, Enums.FreightType.Standard);
+            var position = new Position(0, 0);
+
+            position.AddContainer(container1);
+            position.AddContainer(container2);
+
+            Assert.IsTrue(position.GetPositionWeight() == 30.0);
         }
 
     }

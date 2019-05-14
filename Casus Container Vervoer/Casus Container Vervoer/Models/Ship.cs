@@ -14,11 +14,11 @@ namespace Casus_Container_Vervoer.Models
         private List<Container> _containers;
         private const double MaxBalanceDifference = 20;
 
-        public Ship(int width, int length, double maxCargoWeight)
+        public Ship(int width, int length, double minCargoWeight)
         {
             this.Width = width;
             this.Length = length;
-            this.MaxWeight = maxCargoWeight;
+            this.MinWeight = minCargoWeight;
             _positions = new List<Position>();
             _containers = new List<Container>();
             AddGridToShip();
@@ -26,7 +26,7 @@ namespace Casus_Container_Vervoer.Models
 
         public int Width { get; private set; }
         public int Length { get; private set; }
-        public double MaxWeight { get; private set; }
+        public double MinWeight { get; private set; }
 
         private void AddGridToShip()
         {
@@ -100,7 +100,7 @@ namespace Casus_Container_Vervoer.Models
                 rightPositions = _positions.Where(pos => pos.XPos >= (Math.Round(Width / 2.0))).ToList().Sum(pos => pos.Weight);
             }
             var difference = ((leftPositions - rightPositions) / ((leftPositions + rightPositions) / 2)) * 100;
-            return difference <= MaxBalanceDifference && difference>=-20;
+            return difference <= MaxBalanceDifference && difference>= (-MaxBalanceDifference);
         }
 
     }

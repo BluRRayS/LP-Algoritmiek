@@ -37,7 +37,8 @@ namespace Casus_Container_Vervoer.Models
 
         public double GetPositionWeight()
         {
-            return Weight - (_containers is null ? _containers.First().Weight : 0.0);
+            if (_containers.Count == 0) return 0;
+            return (Weight -  _containers[0].Weight);
         }
 
         public bool TryAddContainer(IContainer container)

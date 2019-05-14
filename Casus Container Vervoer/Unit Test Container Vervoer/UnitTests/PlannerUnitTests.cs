@@ -35,7 +35,7 @@ namespace Unit_Test_Container_Vervoer.UnitTests
             //Arrange
             var ship = new Ship(2, 4, 16);
             var planner = new Planner(ship);
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 9; i++)
             {
                 planner.AddContainer(new Container(1, Enums.FreightType.Valuable));
             }
@@ -101,11 +101,63 @@ namespace Unit_Test_Container_Vervoer.UnitTests
             {
                 Assert.Fail(e.Message);
             }
-           
 
-            Assert.IsTrue(planner.GetShipContainers().Count== 49);
+            var amount = planner.GetShipContainers().Count;
+            Assert.IsTrue(planner.GetShipContainers().Count== containers.Count);
+        }
+
+        [TestMethod]
+        public void TestCase2()
+        {
+            var ship = new Ship(2, 2, 300);
+            var planner = new Planner(ship);
+
+            IList<Container> containers = new List<Container>();
+
+            for (var i = 0; i < 16; i++)
+            {
+                containers.Add(new Container(30, Enums.FreightType.Standard));
+            }
+
+            for (var i = 0; i < 4; i++)
+            {
+                containers.Add(new Container(20, Enums.FreightType.Standard));
+            }
+
+            for (var i = 0; i < 4; i++)
+            {
+                containers.Add(new Container(5, Enums.FreightType.Standard));
+            }
+
+            for (var i = 0; i < 4; i++)
+            {
+                containers.Add(new Container(3, Enums.FreightType.Standard));
+            }
+
+            for (var i = 0; i < 4; i++)
+            {
+                containers.Add(new Container(2, Enums.FreightType.Standard));
+            }
+
+            foreach (var container in containers)
+            {
+                planner.AddContainer(container);
+            }
+
+            try
+            {
+                planner.Plan();
+            }
+            catch (Exception e)
+            {
+                Assert.Fail(e.Message);
+            }
+
+            var amount = planner.GetShipContainers().Count;
+            Assert.IsTrue(planner.GetShipContainers().Count == containers.Count);
         }
     }
+ }
 
-}
+
 

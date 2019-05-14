@@ -44,7 +44,7 @@ namespace Casus_Container_Vervoer
 
         public IReadOnlyList<IContainer> GetShipContainers()
         {
-            return _containers;
+            return _ship.GetShipsContainers();
         }
 
         public IReadOnlyList<Position> GetShipComposition()
@@ -54,7 +54,7 @@ namespace Casus_Container_Vervoer
 
         private bool IsSumContainersHeavyEnoughForShip()
         {
-            var value = (_containers.Sum(container => container.Weight) >= (_ship.MaxWeight / 2));
+            var value = (_containers.Sum(container => container.Weight) >= (_ship.MinWeight / 2));
             return value;
         }
             
@@ -67,24 +67,20 @@ namespace Casus_Container_Vervoer
 
         public void Plan()
         {
-            //If too many valuable containers are about to be loaded
-            if (IsAmountOfValuableContainersTooMuch()) throw new InvalidOperationException("Too many Valuable containers for ship.");
+            if (IsAmountOfValuableContainersTooMuch())
+                throw new InvalidOperationException("Too many Valuable containers for ship.");
 
-            //If ship weight isn't filled for 50%
-            if(!IsSumContainersHeavyEnoughForShip()) throw  new Exception("Minimum ship weight hasn't been reached.");
+            if(!IsSumContainersHeavyEnoughForShip())
+                throw  new Exception("Minimum ship weight hasn't been reached.");        
 
-          
-            //Sort
-           _containers = _containers.OrderBy(container => container.FreightType).ThenBy(container => container.Weight).ToList();
+           _containers = _containers.OrderBy(container => container.FreightType).ThenByDescending(container => container.Weight).ToList();
 
            LoadCooledContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Cooled));
            LoadNormalContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Standard));
            LoadValuableContainers(_containers.Where(container => container.FreightType == Enums.FreightType.Valuable));
 
             if (!_ship.BalanceIsOk())
-            {
                 throw new InvalidOperationException("With current container composition ship is out of balance.");
-            }
         }            
 
         private void LoadCooledContainers(IEnumerable<IContainer> containers)
@@ -116,7 +112,7 @@ namespace Casus_Container_Vervoer
         private void LoadValuableContainers(IEnumerable<IContainer> containers)
         {
             var valuableContainers = containers.ToList();
-            if (valuableContainers.Any()) return;
+            if (!valuableContainers.Any()) return;
             containers = valuableContainers.Where(container => container.FreightType == Enums.FreightType.Valuable);
             foreach (var container in containers)
             {
